@@ -7,17 +7,19 @@ node()
 stage('Prepare')	
 	checkout scm
 	
-  stage('DeployCommit') 
-    gctsDeploy(
+  gctsDeploy(
   script: this,
   host: 'https://hclutl1909.hcldigilabs.com:8001',
+  client: '200',
   abapCredentialsId: 'ABAPUserPasswordCredentialsId',
-  repository: 'hcl-devops-v2',
-  remoteRepositoryURL: "https://github.com/abhilashhaa/HCL-DevOPs-V2.git",
+  repository: 'hcl-devops-v',
+  remoteRepositoryURL: "https://github.com/abhilashhaa/HCL-DevOps-V1.git",
   role: 'TARGET',
   vSID: 'FEF',
-  rollback: 'false'
-	    )
+  rollback: true,
+  configuration: [VCS_AUTOMATIC_PULL: 'FALSE',VCS_AUTOMATIC_PUSH: 'FALSE',CLIENT_VCS_LOGLVL: 'debug']
+)
+
 	      
 	
 stage('RunUnitTest')
